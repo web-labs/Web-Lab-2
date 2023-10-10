@@ -17,20 +17,24 @@ public class CoordinatesValidator {
     }
 
     public boolean validate(){
-        return checkX() && checkY() && checkR();
+        return checkX() && checkY() && checkR() && checkEmpty();
     }
 
     private boolean checkX(){
+
         return -3 < x && x < 5;
     }
 
     private boolean checkY(){
-        List<Integer> possibleY = Arrays.asList(-3, -2, -1, 0, 1, 2, 3, 4, 5);
-        return possibleY.contains((int) y) && y == (int) y;
+        return -3 <= y && y <= 5;
     }
 
     private boolean checkR(){
-        List<? extends Number> possibleR = Arrays.asList(1, 1.5, 2, 2.5, 3);
+        List<? extends Number> possibleR = Arrays.asList(1.0, 1.5, 2.0, 2.5, 3.0);
         return possibleR.contains(r);
+    }
+
+    private boolean checkEmpty(){
+        return !(String.valueOf(x).isEmpty() || String.valueOf(y).isEmpty() || String.valueOf(r).isEmpty());
     }
 }

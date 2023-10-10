@@ -1,6 +1,7 @@
 package servlets;
 
 import com.google.gson.Gson;
+import utils.CoordinatesValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,14 +15,7 @@ import java.util.Map;
 @WebServlet("/controller")
 public class ControllerServlet extends HttpServlet {
 
-    private boolean isNotInArr(double[] arr, double param){
-        for (double value : arr){
-            if (value == param){
-                return false;
-            }
-        }
-        return true;
-    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -32,27 +26,21 @@ public class ControllerServlet extends HttpServlet {
         String yValue = request.getParameter("yVal");
         String rValue = request.getParameter("rVal");
 
-//        double[] possibleY = new double[] {-3, -2, -1, 0, 1, 2, 3, 4, 5};
-        double[] possibleR = new double[] {1, 1.5, 2, 2.5, 3};
+
         try {
             if (xValue == null || yValue == null || rValue == null){
                 throwError(response, INVALID_DATA_MSG);
                 return;
             }
 
-            if (xValue.isEmpty() || yValue.isEmpty() || rValue.isEmpty()){
+
+
+            CoordinatesValidator validator = new CoordinatesValidator(Double.parseDouble(xValue), Double.parseDouble(yValue), Double.parseDouble(rValue));
+            if (!validator.validate()){
                 throwError(response, INVALID_DATA_MSG);
                 return;
             }
 
-            if (Double.parseDouble(xValue) >= 5 || Double.parseDouble(xValue) <= -3
-                    || Double.parseDouble(yValue) < -3 || Double.parseDouble(yValue) > 5 ||
-//                   || isNotInArr(possibleY, Double.parseDouble(yValue)) ||
-                    isNotInArr(possibleR, Double.parseDouble(rValue)))
-            {
-                throwError(response, INVALID_DATA_MSG);
-                return;
-            }
 
             request.getRequestDispatcher("/areaCheck").forward(request, response);
         } catch (Exception e){

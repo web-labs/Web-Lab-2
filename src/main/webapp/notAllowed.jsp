@@ -4,6 +4,7 @@
     <title>404</title>
 </head>
 <body>
-<img src="https://http.cat/404.jpg" alt="404">
+<img src="https://http.cat/403.jpg" alt="403">
+<h2>Please complete the authorization and try again</h2>
 </body>
 </html>

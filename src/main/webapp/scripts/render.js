@@ -7,6 +7,9 @@ submitBtn.addEventListener('click', function (e){
     const chosenCheckboxes = document.querySelectorAll("input[name='rValue']:checked");
     const rVal = Array.from(chosenCheckboxes).map(checkbox => checkbox.value);
 
+    const user = document.querySelector('#user').value;
+
+
     const validator = new Validator();
     validator.validate(xVal, yVal, rVal);
     if (validator.getResponseCode() === 1){
@@ -14,7 +17,7 @@ submitBtn.addEventListener('click', function (e){
 
 
         //drawPoint(canvasCoords.x, canvasCoords.y);
-        sendRequest(xVal, yVal, rVal, "sendValue");
+        sendRequest(xVal, yVal, rVal, user, "sendValue");
             } else {
         Toastify({
             text: validator.getMessage(),

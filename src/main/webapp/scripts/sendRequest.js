@@ -1,4 +1,4 @@
-function sendRequest(xVal, yVal, rVal, pointType){
+function sendRequest(xVal, yVal, rVal, user, pointType){
     fetch(`controller`, {
         method: 'POST',
         headers: {
@@ -7,7 +7,9 @@ function sendRequest(xVal, yVal, rVal, pointType){
         body: new URLSearchParams({
             xVal: xVal,
             yVal: yVal,
-            rVal: rVal
+            rVal: rVal,
+            user: user,
+            type: "checkAreaRequest"
         }).toString()
     })
         .then(response => {
@@ -46,18 +48,23 @@ function sendRequest(xVal, yVal, rVal, pointType){
             }
         })
         .catch(error => {
-            Toastify({
-                text: "There was an error processing your request:" + error.message,
-                className: "error",
-                style: {
-                    background: "linear-gradient(to right, #ff6347, #ff0000)",
-                    border: "1px solid white"
-                },
-                offset: {
-                    x: window.innerWidth / 2 - 75,
-                    y: 0
-                },
-                position: "right",
-            }).showToast();
+            if (error.message.includes("403")){
+                location.href = "/Web_Lab2/notAllowed.jsp"
+            } else{
+                Toastify({
+                    text: "There was an error processing your request:" + error.message,
+                    className: "error",
+                    style: {
+                        background: "linear-gradient(to right, #ff6347, #ff0000)",
+                        border: "1px solid white"
+                    },
+                    offset: {
+                        x: window.innerWidth / 2 - 75,
+                        y: 0
+                    },
+                    position: "right",
+                }).showToast();
+            }
+
         });
 }

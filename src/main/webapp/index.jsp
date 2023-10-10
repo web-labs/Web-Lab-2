@@ -91,6 +91,17 @@
 
                     <tr>
                         <td>
+                            <label for="user">User (s######)</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" name="user" id="user" class="coords-input" maxlength="10">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
                             <input type="button" value="Send" class="submit-btn"><br>
                         </td>
                     </tr>
@@ -157,97 +168,17 @@
 
 
 <script type="module" src="scripts/render.js"></script>
+<script type="text/javascript" src="scripts/init.js"></script>
 <script type="text/javascript" src="scripts/drawing.js"></script>
 <script type="text/javascript" src="scripts/sendRequest.js"></script>
+<script type="text/javascript" src="scripts/yActions.js"></script>
+<script type="text/javascript" src="scripts/checkBoxes.js"></script>
+<script type="text/javascript" src="scripts/canvasClickHandle.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </body>
 </html>
 
+
 <script>
 
-    window.onload = function () {
-        drawCoordsPlane();
-    }
-
-
-    let yVal;
-
-    const yButtons = document.querySelectorAll('.y-button');
-    yButtons.forEach((button) => {
-        button.style.border = "1px solid green";
-        button.style.borderRadius = "10px";
-        button.style.fontSize = "16px";
-        button.style.cursor = "pointer";
-        button.style.borderRadius = "12px"
-        button.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            yButtons.forEach((btn) => {
-                btn.style.background = null;
-                btn.style.color = null;
-                btn.style.padding = null;
-            });
-
-            this.style.background = "#45a049";
-            this.style.color = "white";
-
-
-
-            yVal = this.value;
-        });
-    });
-
-
-
-    const checkboxes = document.querySelectorAll("input[name='rValue']");
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            if (this.checked) {
-                checkboxes.forEach(box => {
-                    if (box !== this) {
-                        box.checked = false;
-                    }
-                });
-            }
-        });
-    });
-
-
-    const canvas = document.getElementById('canvas')
-    const ctx = canvas.getContext('2d');
-
-    canvas.addEventListener('click', function (event){
-        const rect = canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-
-        const chosenCheckboxes = document.querySelectorAll("input[name='rValue']:checked");
-        const rVal = Array.from(chosenCheckboxes).map(checkbox => checkbox.value);
-
-
-        const normalCoords = toNormalCoords(x, y, rVal, 350);
-
-        if (rVal.length !== 0){
-            sendRequest(normalCoords.x, normalCoords.y, rVal, "canvasPoint");
-            //drawPoint(x, y);
-        } else {
-            Toastify({
-                text: "You must have chosen R range",
-                className: "error",
-                style: {
-                    background: "linear-gradient(to right, #ff6347, #ff0000)",
-                    border: "1px solid white",
-                    'font-size': "20px"
-                },
-                offset: {
-                    x: 0,
-                    y: 0
-                },
-                position: "center",
-            }).showToast();
-        }
-
-
-    })
 </script>
-
