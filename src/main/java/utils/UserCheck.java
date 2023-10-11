@@ -1,15 +1,12 @@
 package utils;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class UserCheck {
     public boolean search(String user) throws FileNotFoundException {
-        String path = "C:\\Users\\user\\IdeaProjects\\Web_Lab2\\possibleDirs.txt";
+        InputStream is = getClass().getClassLoader().getResourceAsStream("possibleDirs.txt");
         boolean found = false;
-        try (BufferedReader br = new BufferedReader(new FileReader(path))){
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(is))){
             String line;
 
             while ((line = br.readLine()) != null){
