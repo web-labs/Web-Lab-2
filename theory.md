@@ -202,7 +202,7 @@ JavaBeans — классы в языке Java, написанные по опр�
 
 ### Bean и JSP:
 Специальные теги JSP позволяют легко интегрировать Beans в JSP-страницы.
-```
+``` jsp
 <jsp:useBean id="user" class="com.example.User"/>
 <jsp:setProperty name="user" property="name" value="John"/>
 <jsp:getProperty name="user" property="name"/>
